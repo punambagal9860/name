@@ -10,7 +10,11 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
-**2025-07-12**: Enhanced authentication system with user registration, email login, and profile management features.
+**2025-07-12**: 
+- Enhanced authentication system with user registration, email login, and profile management features
+- Reorganized project structure with separate modules for routes, utilities, and configuration
+- Added comprehensive configuration management with environment-specific settings
+- Created utility helpers for common operations and validations
 
 ## System Architecture
 
@@ -32,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 - **Employee Model**: Core entity with fields for name, department, role, salary, date of joining, and audit timestamps
 - **Admin Model**: Enhanced user authentication with username, email, password hash, role (Admin/HR), active status, and last login tracking
 
-### Authentication (`auth.py`)
+### Authentication (`routes/auth.py`)
 - Session-based login/logout system with email or username login
 - User registration with email validation and role assignment
 - Profile management with password change functionality
@@ -40,10 +44,25 @@ Preferred communication style: Simple, everyday language.
 - Route protection middleware
 - Enhanced user session management with role-based access
 
-### Main Routes (`routes.py`)
-- Dashboard with employee statistics and recent additions
-- Employee listing with search and filter capabilities
-- CRUD operations for employee management
+### Employee Management (`routes/employee.py`)
+- Dashboard with employee statistics and visualizations
+- Employee CRUD operations with comprehensive validation
+- Search and filter functionality with multiple parameters
+- API endpoints for employee data access
+- Export functionality for data analysis
+
+### Configuration (`config.py`)
+- Environment-specific configuration classes
+- Database connection settings and security parameters
+- Email configuration for future features
+- Application settings with secure defaults
+
+### Utilities (`utils/helpers.py`)
+- Authentication decorators (login_required, admin_required)
+- Form validation functions for email, password, and username
+- Data formatting utilities (currency, date, datetime)
+- CSV generation and file handling functions
+- Statistical analysis helpers for employee data
 
 ### Reports (`reports.py`)
 - Statistical analysis by department and role
@@ -91,23 +110,34 @@ Preferred communication style: Simple, everyday language.
 ```
 ├── app.py              # Application factory and configuration
 ├── main.py             # Application entry point
+├── config.py           # Configuration management
 ├── models.py           # Database models
-├── routes.py           # Main application routes
-├── auth.py             # Authentication routes
 ├── reports.py          # Reporting and analytics
+├── routes/             # Route modules
+│   ├── __init__.py     # Package initialization
+│   ├── auth.py         # Authentication routes
+│   └── employee.py     # Employee management routes
+├── utils/              # Utility functions
+│   ├── __init__.py     # Package initialization
+│   └── helpers.py      # Helper functions and decorators
 ├── templates/          # HTML templates
 │   ├── base.html       # Base template with enhanced navigation
 │   ├── index.html      # Dashboard
+│   ├── dashboard.html  # Alternative dashboard view
 │   ├── employees.html  # Employee listing
+│   ├── view_employees.html # Alternative employee view
 │   ├── add_employee.html    # Employee creation form
 │   ├── edit_employee.html   # Employee editing form
 │   ├── login.html      # Login page with registration link
 │   ├── register.html   # User registration form
+│   ├── signup.html     # Alternative signup page
 │   ├── profile.html    # User profile management
 │   └── reports.html    # Reports dashboard
-└── static/             # Static assets
-    ├── css/custom.css  # Custom styling
-    └── js/main.js      # JavaScript functionality
+├── static/             # Static assets
+│   ├── css/custom.css  # Custom styling
+│   └── js/main.js      # JavaScript functionality
+└── database/           # Database files
+    └── employees.db    # SQLite database (development)
 ```
 
 The application follows a traditional MVC pattern with clear separation of concerns, making it easy to maintain and extend.
