@@ -11,3 +11,9 @@ openpyxl==3.1.2          # If you plan to support Excel exports
 Flask-Login==0.6.3       # For session-based authentication
 Flask-Bootstrap==3.3.7.1 # Optional: Helps integrate Bootstrap templates
 gunicorn==21.2.0         # For deployment on production servers
+# Example: for Ubuntu/Linux/macOS
+sudo apt install python3.11 python3.11-venv
+python3.11 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip setuptools
+pip install -r requirements.txt
