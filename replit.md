@@ -8,6 +8,10 @@ This is a Flask-based web application for managing employee records. It provides
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+**2025-07-12**: Enhanced authentication system with user registration, email login, and profile management features.
+
 ## System Architecture
 
 ### Backend Architecture
@@ -26,12 +30,15 @@ Preferred communication style: Simple, everyday language.
 
 ### Models (`models.py`)
 - **Employee Model**: Core entity with fields for name, department, role, salary, date of joining, and audit timestamps
-- **Admin Model**: User authentication with username and password hash
+- **Admin Model**: Enhanced user authentication with username, email, password hash, role (Admin/HR), active status, and last login tracking
 
 ### Authentication (`auth.py`)
-- Session-based login/logout system
-- Default admin user creation (username: admin, password: admin123)
+- Session-based login/logout system with email or username login
+- User registration with email validation and role assignment
+- Profile management with password change functionality
+- Default admin user creation (username: admin, password: admin123, email: admin@company.com)
 - Route protection middleware
+- Enhanced user session management with role-based access
 
 ### Main Routes (`routes.py`)
 - Dashboard with employee statistics and recent additions
@@ -89,12 +96,14 @@ Preferred communication style: Simple, everyday language.
 ├── auth.py             # Authentication routes
 ├── reports.py          # Reporting and analytics
 ├── templates/          # HTML templates
-│   ├── base.html       # Base template with navigation
+│   ├── base.html       # Base template with enhanced navigation
 │   ├── index.html      # Dashboard
 │   ├── employees.html  # Employee listing
 │   ├── add_employee.html    # Employee creation form
 │   ├── edit_employee.html   # Employee editing form
-│   ├── login.html      # Login page
+│   ├── login.html      # Login page with registration link
+│   ├── register.html   # User registration form
+│   ├── profile.html    # User profile management
 │   └── reports.html    # Reports dashboard
 └── static/             # Static assets
     ├── css/custom.css  # Custom styling

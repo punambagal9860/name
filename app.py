@@ -43,11 +43,34 @@ with app.app_context():
     from models import Admin
     from werkzeug.security import generate_password_hash
     
-    if not Admin.query.filter_by(username='admin').first():
-        admin = Admin(
-            username='admin',
-            password_hash=generate_password_hash('admin123')
-        )
-        db.session.add(admin)
-        db.session.commit()
-        logging.info("Default admin user created: admin/admin123")
+    try:
+        # Check if admin user exists
+        admin_exists = Admin.query.filter_by(username='admin').first()
+        if not admin_exists:
+            admin = Admin(
+                username='admin',
+                email='admin@company.com',
+                password_hash=generate_password_hash('admin123'),
+                role='Admin'
+            )
+            db.session.add(admin)
+            db.session.commit()
+            logging.info("Default admin user created: admin/admin123")
+    except Exception as e:
+        logging.error(f"Error creating default admin user: {str(e)}")
+        # If there's an error, it might be due to missing columns
+        # Let's try to migrate by dropping and recreating the table
+        try:
+            db.drop_all()
+            db.create_all()
+            admin = Admin(
+                username='admin',
+                email='admin@company.com',
+                password_hash=generate_password_hash('admin123'),
+                role='Admin'
+            )
+            db.session.add(admin)
+            db.session.commit()
+            logging.info("Database migrated and default admin user created: admin/admin123")
+        except Exception as e2:
+            logging.error(f"Database migration failed: {str(e2)}")
